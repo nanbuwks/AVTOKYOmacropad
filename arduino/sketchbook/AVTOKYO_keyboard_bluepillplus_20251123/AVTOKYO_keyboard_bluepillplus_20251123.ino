@@ -1,6 +1,10 @@
-constexpr int PIN_LED_BUILTIN = PB2;
+#define ENABLE_ENCODER_LEDS
+#ifdef ENABLE_ENCODER_LEDS
 constexpr int PIN_LED_ENCODER_1 = PC14;
 constexpr int PIN_LED_ENCODER_2 = PC15;
+#endif
+
+constexpr int PIN_LED_BUILTIN = PB2;
 constexpr int PIN_SWITCH_0 = PB0;
 constexpr int PIN_SWITCH_1 = PB1;
 constexpr int PIN_SWITCH_2 = PB3;
@@ -123,12 +127,15 @@ void setup() {
   pinMode(PIN_SWITCH_1, INPUT_PULLDOWN);
   pinMode(PIN_SWITCH_2, INPUT_PULLDOWN);
   pinMode(PIN_SWITCH_3, INPUT_PULLUP);
+
+#ifdef ENABLE_ENCODER_LEDS
   pinMode(PIN_LED_ENCODER_1, OUTPUT);
   pinMode(PIN_LED_ENCODER_2, OUTPUT);
 
   // エンコーダーLEDを点灯。片方のみ光らせても良し
   digitalWrite(PIN_LED_ENCODER_1, HIGH);
   digitalWrite(PIN_LED_ENCODER_2, HIGH);
+#endif
 
   // USB HIDの設定
   usb_hid.setPollInterval(2);
